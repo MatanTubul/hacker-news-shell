@@ -16,7 +16,9 @@ class ArticleNotFound(Exception):
 def fetch_article_by_rank():
     """
         Fetching article by given rank from user input
-        and printing all article comments
+        and printing all article comments, rank should be limit
+        according to HN api's docs there is a limit of
+        Up to 500 top articles returning from the api.
     """
     try :
 
