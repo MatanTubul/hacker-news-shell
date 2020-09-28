@@ -19,4 +19,4 @@ python shellhn.py <command>
 | Command        | args           | Description  |
 | :-------------: |:-------------:| :------:|
 | top      | --num | Printing top num articles | 
-| comments     | none      |   Printing comments by given rank |
+| comments     |       |   Printing comments by given rank |
