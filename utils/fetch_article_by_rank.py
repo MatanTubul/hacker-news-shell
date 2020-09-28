@@ -1,7 +1,7 @@
 import logging
 import requests
-from .validators import validate_input_number
-from libs import HACKER_NEWS_API_BASE_URL, \
+from utils.validators import validate_input_number
+from libs.common import HACKER_NEWS_API_BASE_URL, \
     HACKER_NEWS_API_ITEM_URL
 from alive_progress import alive_bar
 from .print_article_comments import print_comment

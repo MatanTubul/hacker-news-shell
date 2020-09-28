@@ -1,7 +1,8 @@
 import argparse
 import sys
-from utils import print_top_articles, fetch_article_by_rank
 import logging
+from utils.fetch_top_articles import print_top_articles
+from utils.fetch_article_by_rank import fetch_article_by_rank
 
 class CommandsCli(object):
     """

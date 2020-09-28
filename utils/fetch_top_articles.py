@@ -2,13 +2,15 @@ import logging
 import argparse
 import asyncio
 import requests
-from libs import HACKER_NEWS_API_BASE_URL, \
-    TOP_ARTICLES_WITH_LIMIT_PATH
 from prettytable import PrettyTable
 from alive_progress import alive_bar
-from .validators import validate_input_number
-from libs import fetch_all
-from libs import build_items_url
+from utils.validators import validate_input_number
+from libs.async_fetch_articles import fetch_all
+from libs.common import build_items_url, HACKER_NEWS_API_BASE_URL, \
+    TOP_ARTICLES_WITH_LIMIT_PATH
+
+class TypeMismatchError(Exception):
+    pass
 
 def print_top_articles(args):
     """
@@ -29,7 +31,7 @@ def print_top_articles(args):
         articles_table.field_names = columns
 
         for article in fetch_top_articles(str(num_articles_to_fetch)) :
-            try :
+            try:
                 # store rank in article object for article_table use
                 articles_table.add_row([article[k] for k in columns])
             except Exception as err :
@@ -47,7 +49,9 @@ def fetch_top_articles(num_articles) :
     :param num_articles: number articles to fetch
     :return: generator
     """
-    try :
+    try:
+        if not type(num_articles) == str:
+            raise TypeMismatchError("number is not from str type")
         url_to_fetch = ''.join([HACKER_NEWS_API_BASE_URL,
                                 TOP_ARTICLES_WITH_LIMIT_PATH,
                                 "&limitToFirst=",
