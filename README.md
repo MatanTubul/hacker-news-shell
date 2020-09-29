@@ -9,6 +9,10 @@ Just install with pip:
 ```
  pip install -r requirements.txt
 ```
+## Testing
+```python
+python -m unittest tests
+```
 
 ## Usage
 ```

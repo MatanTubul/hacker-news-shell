@@ -10,13 +10,15 @@ from .print_article_comments import print_comment
 class ArticleRankException(Exception):
     pass
 
+
 class ArticleNotFound(Exception):
     pass
+
 
 def fetch_article_by_rank():
     """
         Fetching article by given rank from user input
-        and printing all article comments, rank should be limit
+        and printing all article comments, rank should be limit.
         according to HN api's docs there is a limit of
         Up to 500 top articles returning from the api.
     """
@@ -24,9 +26,8 @@ def fetch_article_by_rank():
 
         rank = input("Enter a rank number between 1 - 500: ")
         # input return string so converting to int
-        rank = int(rank)
 
-        if not validate_input_number(1, rank, 500):
+        if not validate_input_number(1, int(rank), 500):
             raise ArticleRankException("Rank out of range")
         # query top articles by filtering data using startAt and endAt filters
         # range of articles will be by the rank which the user provided
@@ -41,21 +42,22 @@ def fetch_article_by_rank():
             bar()
             # decoding data to json format
             articles_id = response.json()
-            if not str(rank) in articles_id:
+            if not rank in articles_id:
                 raise ArticleNotFound("Not found article with rank %s" % rank)
 
-            # extract last article in list which gives us the article for the provided rank.
+            # generate item url based on founded article id .
             article = requests.get(HACKER_NEWS_API_ITEM_URL
-                                   % (articles_id[str(rank)])).json()
+                                   % (articles_id[rank])).json()
             bar()
         if 'kids' in article:
+            logging.info("Found article: %s" % article['title'])
             logging.info("Fetching and printing comments, please wait...")
 
             for comment_id in article['kids']:
                 print()
                 print_comment(comment_id)
         else:
-            logging.info("No comments found for article with rank %d", rank)
+            logging.info("No comments found for article with rank %s", rank)
 
     except ValueError:
         logging.error('Invalid input')
