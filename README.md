@@ -1,5 +1,5 @@
  # shellHN
-##### Hacker News interactive cli util
+##### Hacker News interactive cli util, supporting interaction with Hacker News FireBase API
 
 ## Prerequisites
 Python 3.5+ 
