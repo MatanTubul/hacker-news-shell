@@ -11,9 +11,9 @@ async def fetch_all(urls):
     :return: [] list of dict not sorted
     """
     tasks = []
-    async with ClientSession() as session :
-        with alive_bar(len(urls)) as bar :
-            for index, url in enumerate(urls, start=1) :
+    async with ClientSession() as session:
+        with alive_bar(len(urls)) as bar:
+            for index, url in enumerate(urls, start=1):
                 task = asyncio.ensure_future(fetch(url, session, index,
                                                    bar))
                 tasks.append(task)  # create list of tasks
@@ -34,4 +34,4 @@ async def fetch(url, session, rank, progress_bar):
         # done fetching item updating progress bar
         progress_bar()
         resp = await response.json()
-        return {'title' :resp['title'], 'rank' :rank}
+        return {'title':resp['title'], 'rank':rank}

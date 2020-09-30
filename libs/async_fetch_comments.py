@@ -61,6 +61,6 @@ async def fetch_comment(session, item, progress_bar):
             for rank, comment_id in enumerate(data["kids"]):
                 data[comment_id] = await fetch_comment(session,
                                                        comment_id,
-                                                        progress_bar)
+                                                       progress_bar)
 
         return data

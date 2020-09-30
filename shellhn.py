@@ -13,11 +13,11 @@ root.addHandler(handler)
 
 
 def main():
-    try :
+    try:
         CommandsCli()
-    except Exception as err :
+    except Exception as err:
         logging.error("%s", err)
 
 
-if __name__ == '__main__' :
+if __name__ == '__main__':
     main()

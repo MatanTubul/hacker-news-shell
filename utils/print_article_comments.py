@@ -12,20 +12,20 @@ def print_with_indent(text, indent):
     :return:
     """
     # replace white space using regular expression
-    text=re.sub('\s+', ' ', text)
+    text = re.sub('\s+', ' ', text)
     # match at beging of the string
-    text=re.sub('^\s+', '', text)
+    text = re.sub('^\s+', '', text)
     # match at the end of the string immediately before the newline
-    text=re.sub('\s+$', '', text)
+    text = re.sub('\s+$', '', text)
     # wrapping text with fixed size
-    text=textwrap.wrap(text, width=150,
-                       initial_indent='  '*indent,
-                       subsequent_indent='  '*indent)
-    s=""
-    for i in text :
+    text = textwrap.wrap(text, width=150,
+                         initial_indent='  ' * indent,
+                         subsequent_indent='  ' * indent)
+    s = ""
+    for i in text:
         # adding break line to our new line
-        s=s+i+"\n"
-    s=re.sub('\s+$','',s)
+        s = s + i + "\n"
+    s = re.sub('\s+$', '', s)
     return s
 
 

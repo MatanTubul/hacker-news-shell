@@ -69,7 +69,8 @@ def fetch_top_articles(num_articles) :
             bar()
         # async fetching for all
         loop = asyncio.get_event_loop()  # event loop
-        future = asyncio.ensure_future(fetch_all(build_items_url(response.json())))  # tasks to do
+        future = asyncio.ensure_future(
+            fetch_all(build_items_url(response.json())))  # tasks to do
         articles = loop.run_until_complete(future)  # loop until done
         loop.close()
         articles = sorted(articles, key=lambda k :k['rank'])

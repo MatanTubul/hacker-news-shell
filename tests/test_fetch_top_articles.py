@@ -20,4 +20,4 @@ class TestingFetchTopArticles(unittest.TestCase):
     def test_expected_correct_size_fetched_articles(self):
         expected_top_articles = "20"
         top_articles = fetch_top_articles(expected_top_articles)
-        self.assertEqual(len(top_articles),int(expected_top_articles))
+        self.assertEqual(len(top_articles), int(expected_top_articles))

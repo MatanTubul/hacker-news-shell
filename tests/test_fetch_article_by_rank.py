@@ -13,5 +13,5 @@ class TestingFetchCommentsByRankArticle(unittest.TestCase):
 
     def test_throw_article_not_found_exception(self):
         # mock builtin input function
-        with mock.patch('builtins.input', return_value=500) :
+        with mock.patch('builtins.input', return_value=500):
             self.assertRaises(ArticleNotFound, fetch_article_by_rank())
