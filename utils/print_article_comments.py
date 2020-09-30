@@ -1,54 +1,61 @@
-import requests
 import re
 import textwrap
-import json
 import logging
-from libs.common import HACKER_NEWS_API_ITEM_URL
+from bs4 import BeautifulSoup as BS
 
 
-def print_with_indent(t, indent):
-    # repalce white space using regular expression
-    t=re.sub('\s+', ' ', t)
+def print_with_indent(text, indent):
+    """
+    Manipulate comment text to keep indentation
+    :param text: text input
+    :param indent: (int) to indent
+    :return:
+    """
+    # replace white space using regular expression
+    text=re.sub('\s+', ' ', text)
     # match at beging of the string
-    t=re.sub('^\s+','',t)
+    text=re.sub('^\s+', '', text)
     # match at the end of the string immediately before the newline
-    t=re.sub('\s+$','',t)
+    text=re.sub('\s+$', '', text)
     # wrapping text with fixed size
-    t=textwrap.wrap(t,width=150,
-                    initial_indent='  '*indent,
-                    subsequent_indent='  '*indent)
+    text=textwrap.wrap(text, width=150,
+                       initial_indent='  '*indent,
+                       subsequent_indent='  '*indent)
     s=""
-    for i in t :
+    for i in text :
         # adding break line to our new line
         s=s+i+"\n"
     s=re.sub('\s+$','',s)
     return s
 
 
-def print_comment(item, indent=0):
+def print_comment(comment, indent=0):
     """
-     Recursively fetch and insert all nested comments into json object
-     and then printing each comment with correct indentation
-    :param item: comment id to fetch
-    :param indent (int): comment indentation
+     Recursively print nested comments keeping correct indentation
+    :param comment: comment dict
+    :param item: comment to print
+    :param indent (int): comment indentation default is 0
     :return:
     """
-    try :
-        url = HACKER_NEWS_API_ITEM_URL % item
-        data = requests.get(url).json()
+    try:
+        if not comment:
+            return
+        if 'text' in comment:
+            # parsing text from html format
+            parsed_text = BS(comment['text'], "html.parser").get_text()
 
-        if 'text' in data :
-            if indent >= 1 :
-                print('  ' * indent + 'Posted by:' + data['by'])
-                print(print_with_indent(data['text'], indent))
+            if indent >= 1:
+                print('  ' * indent + 'Posted by: ' + comment['by'])
+                print(print_with_indent(parsed_text, indent))
                 print()
-            else :
-                print('Posted by: ' + data['by'])
-                print(data['text'])
+            else:
+                print('Posted by: ' + comment['by'])
+                print(parsed_text)
                 print()
-        if "kids" in data and len(data["kids"]) > 0 :
-            for comment_id in data["kids"] :
-                data[comment_id] = json.loads(print_comment(comment_id, indent+1))
-        return json.dumps(data)
-    except Exception as err :
+        # printing children comments
+        if "kids" in comment:
+            for comment_id in comment["kids"]:
+                print_comment(comment[comment_id], indent + 1)
+        return None
+    except Exception as err:
         logging.error(err)

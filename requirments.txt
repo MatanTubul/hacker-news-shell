@@ -2,3 +2,4 @@ aiohttp==2.3.10
 alive-progress==1.6.1
 requests==2.24.0
 prettytable==0.7.2
+bs4==0.0.1

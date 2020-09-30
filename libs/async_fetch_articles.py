@@ -26,7 +26,7 @@ async def fetch(url, session, rank, progress_bar):
     :param url: item to fetch from Hacker news api
     :param session: client session
     :param rank: article rank derived from fetching topstories
-    :param progress_bar: progress_bar callback for updating
+    :param progress_bar: progress_bar callback for updating console
     :return:
     """
     """Fetch a url, using specified ClientSession."""
